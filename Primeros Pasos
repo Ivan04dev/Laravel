@@ -1,0 +1,134 @@
+php -v
+
+PHP 8.2.20 (cli) (built: Jun  4 2024 17:50:12) (ZTS Visual C++ 2019 x64)
+Copyright (c) The PHP Group
+Zend Engine v4.2.20, Copyright (c) Zend Technologies
+
+compposer -v
+
+Composer version 2.7.4 2024-04-22 21:17:03
+
+# Crear el proyecto
+composer create-project laravel/laravel mi_proyecto
+
+cd mi_proyecto
+
+# Versión de artisan
+Laravel Framework 12.53.0
+
+# Levantar el servidor
+php artisan serve
+
+# Abrir desde el navegador
+http://127.0.0.1:8000
+
+=====================================================
+
+Estructura de Laravel
+
+/routes
+routes/web.php
+
+Aquí defines qué URL ejecuta qué lógica:
+
+Route::get('/saludo', function(){
+    route 'Hola Laravel';
+});
+
+/app/Http/Controllers
+
+Aquí vive la lógica
+
+php artisan make:controller TareaController
+
+class TareaController extends Controller
+{
+    public function index()
+    {
+        return "Listado de tareas";
+    }
+}
+
+Y en web.php:
+
+Route::get('/tareas', [TareaController::class, 'index']);
+
+/resources/views
+
+Aquí va el frontend(Blade):
+
+<h1>Hola {{ $nombre }}</h1>
+
+Esto reemplaza include('header.php');
+
+/app/Models
+
+Aquí están los modelos que representan tablas
+
+php artisan make:model Tarea
+
+El modelo conecta con la base de datos usando Eloquent(ORM).
+
+/database/migrations
+
+Aquí defines la estructura de tablas.
+
+php artisan make:migration create_tareas_table
+
+Esto es como versionar la base de datos.
+
+Flujo completo en Laravel
+
+-> Route
+-> Controller
+-> Model
+-> View
+-> Respuesta
+
+==============================================================================
+
+Instalación del paquete para Oracle
+
+composer require yajra/laravel-oci8
+
+Configurar la conexión en config/database.php
+
+Agregar dentro de connections:
+
+'oracle' => [
+    'driver' => 'oracle',
+    'tns' => '',
+    'host' => env('DB_HOST', '127.0.0.1'),
+    'port' => env('DB_PORT', '1521'),
+    'database' => env('DB_DATABASE', 'XE'),
+    'username' => env('DB_USERNAME', ''),
+    'password' => env('DB_PASSWORD', ''),
+    'charset' => 'AL32UTF8',
+    'prefix' => '',
+    'prefix_schema' => '',
+],
+
+Configurar .env
+
+DB_CONNECTION=oracle
+DB_HOST=localhost
+DB_PORT=1521
+DB_DATABASE=XE
+DB_USER=system
+DB_PASSWORD=maximiliano1009
+
+php artisan config:clear
+php artisan cache:clear
+
+En caso de error al ejecutar php artisan migrate
+- Verificar si existe la tabla y eliminarla para volver a ejecutar el comando anterior
+
+Borrar todo lo creado por Laravel
+
+php artisan migrate:fresh
+
+Primer CRUD
+
+1.- Crear modelo + migración
+
+php artisan make:model Tarea -m
