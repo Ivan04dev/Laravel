@@ -1,0 +1,16 @@
+SELECT table_name
+FROM user_tables
+WHERE table_name = 'TAREAS';
+
+DROP TABLE TAREAS CASCADE CONSTRAINTS;
+
+SELECT secuence_name
+FROM user_secuences
+WHERE secuence_name = 'TAREAS_ID_SEQ';
+
+DROP TABLE TAREAS CASCADE CONSTRAINTS;
+DROP SEQUENCE TAREAS_ID_SEQ;
+
+SELECT sequence_name 
+FROM user_sequences 
+WHERE sequence_name = 'TAREAS_ID_SEQ';
