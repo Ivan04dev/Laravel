@@ -1,0 +1,85 @@
+🔵 1️⃣ Configura el modelo correctamente
+
+app/Models/Tarea.php
+
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class Tarea extends Model
+{
+    protected $table = 'TAREAS';
+
+    protected $fillable = [
+        'TITULO',
+        'DESCRIPCION',
+        'ESTADO'
+    ];
+
+    public $timestamps = true;
+}
+
+Por qué esto es necesario?
+1️⃣ protected $table
+
+Oracle crea la tabla como TAREAS en mayúsculas.
+Laravel por defecto buscaría tareas en minúsculas.
+
+En Oracle:
+
+TAREAS ≠ tareas
+
+Así que debemos especificarlo.
+
+2️⃣ $fillable
+
+Si no defines esto, cuando hagas:
+
+Tarea::create(...)
+
+Laravel lanzará:
+
+MassAssignmentException
+
+Porque protege los campos por seguridad.
+
+3️⃣ $timestamps
+
+Tu migración creó:
+
+CREATED_AT
+
+UPDATED_AT
+
+Y Oracle los respeta bien con yajra.
+
+#########################################################
+
+Crear un nuevo controlador
+
+php artisan make:controller TareaController
+
+Y ahí colocar:
+
+namespace App\Http\Controllers;
+
+use App\Models\Tarea;
+
+class TareaController extends Controller
+{
+    public function index()
+    {
+        $tareas = Tarea::all();
+        dd($tareas);
+    }
+}
+
+🎯 Después registra la ruta
+
+En routes/web.php:
+
+use App\Http\Controllers\TareaController;
+
+Route::get('/tareas', [TareaController::class, 'index']);
