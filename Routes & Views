@@ -1,0 +1,15 @@
+routes/web.php
+
+<?php
+
+use Illuminate\Support\Facades\Route;
+
+Route::get('/', function () {
+    return view('inicio');
+});
+
+##################################################################
+
+resources/views/inicio.blade.php
+
+<h1>Inicio</h1>
