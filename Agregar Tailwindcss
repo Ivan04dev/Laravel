@@ -1,0 +1,39 @@
+# Se descargan las dependencias de la misma forma que en NodeJS
+npm install -D tailwindcss@3 postcss autoprefixer
+
+# Crea los archivos de configuración (en la versión 4 de tailwindcss ya no son necesarios)
+npx init -p
+
+# Se agrega lo siguiente en /tailwindcss.config.js
+/** @type {import('tailwindcss').Config} */
+export default {
+    content: ["./resources/**/*.blade.php", "./resources/**/*.js"],
+    theme: {
+        extend: {},
+    },
+    plugins: [],
+};
+
+# En resources/css/app.css
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+# Ejecutar npm run dev para compilar tailwind
+
+# En resources/css/app.css agregar: 
+
+<!DOCTYPE html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>DevStagram - @yield('titulo')</title>
+        @vite('resources/css/app.css')
+    </head>
+    <body>
+        <h1 class="text-4xl">@yield('titulo')</h1>
+        <hr>
+        @yield('contenido')
+    </body>
+</html>
