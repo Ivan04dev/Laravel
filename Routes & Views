@@ -13,3 +13,39 @@ Route::get('/', function () {
 resources/views/inicio.blade.php
 
 <h1>Inicio</h1>
+
+##################################################################
+
+# Con un layout
+
+resources/views/layouts/app.blade.php
+
+<!DOCTYPE html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Laravel</title>
+    </head>
+    <body>
+        <nav>
+            <a href="/">Principal</a>
+            <a href="/nosotros">Nosotros</a>
+            <a href="/tienda">Tienda</a>
+        </nav>
+        <h1>@yield('titulo')</h1>
+        <hr>
+        @yield('contenido')
+    </body>
+</html>
+
+# En el archivo en el que utilizarás el layout
+
+@extends('layouts.app')
+
+@section('titulo')
+    Página Principal
+@endsection
+
+@section('contenido')
+@endsection
